@@ -1,23 +1,32 @@
-import logo from './logo.svg';
+import  Axios  from 'axios';
+import { useState } from 'react';
 import './App.css';
 
 function App() {
+
+  const [searchText, setSearchText] = useState("");
+  const [definitionArr, setDefinitionArr] = useState([]);
+
+  const handleInputChange = (e) => {
+    //console.log(e.target.value)
+    setSearchText(e.target.value)
+  }
+
+  const searchTextFunction = () => {
+    Axios.get(`https://api.dictionaryapi.dev/api/v2/entries/en/${searchText}`)
+    .then((res)=>setDefinitionArr(res.data[0].meanings[0].definitions))
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Simple Dictionary</h1>
+      <div>
+        <input className='inputField' onChange={handleInputChange}/>
+        <button className='searchBtn' onClick={searchTextFunction}>Search</button>
+      </div>
+      {definitionArr.map((defi) => {
+        return <div className='definitionContainer'>{defi.definition}</div>
+      })}
     </div>
   );
 }
