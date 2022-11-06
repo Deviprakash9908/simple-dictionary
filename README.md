@@ -11,7 +11,7 @@ A simple dictionary using react and dictionaryapi.dev
 
 ## Installation
 
-CLone this repo.
+Clone this repo.
 
 ```bash
   cd simple-dictionary
